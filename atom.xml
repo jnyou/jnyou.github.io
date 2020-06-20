@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Mr.Nanke</title>
+  <title>南客先生</title>
   
-  <subtitle>Mr.Nanke</subtitle>
+  <subtitle>mr.nanke</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jnyou.github.io/"/>
-  <updated>2020-05-23T11:34:15.113Z</updated>
+  <updated>2020-06-20T06:33:10.462Z</updated>
   <id>https://jnyou.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://jnyou.github.io/2020/05/23/hello-world/"/>
-    <id>https://jnyou.github.io/2020/05/23/hello-world/</id>
+    <link href="https://jnyou.github.io/posts/3eeb.html"/>
+    <id>https://jnyou.github.io/posts/3eeb.html</id>
     <published>2020-05-23T11:34:15.113Z</published>
-    <updated>2020-05-23T11:34:15.113Z</updated>
+    <updated>2020-06-20T06:33:10.462Z</updated>
     
     <summary type="html">
     
