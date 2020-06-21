@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jnyou.github.io/"/>
-  <updated>2020-06-20T06:33:10.462Z</updated>
+  <updated>2020-06-21T09:17:49.458Z</updated>
   <id>https://jnyou.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CentOS7系统安装步骤</title>
+    <link href="https://jnyou.github.io/posts/ab2e.html"/>
+    <id>https://jnyou.github.io/posts/ab2e.html</id>
+    <published>2020-06-21T09:13:20.000Z</published>
+    <updated>2020-06-21T09:17:49.458Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;﻿# 概述&lt;/p&gt;
+&lt;p&gt;CentOS7各版本系统安装过程基本一致，本文使用CentOS7.5镜像进行系统安装，希望对广大读者有所帮助！&lt;/p&gt;
+&lt;h3 id=&quot;一、虚拟机软件&quot;&gt;&lt;a href=&quot;#一、虚拟机软件&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="https://jnyou.github.io/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://jnyou.github.io/tags/Linux/"/>
+    
+      <category term="centos7" scheme="https://jnyou.github.io/tags/centos7/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
