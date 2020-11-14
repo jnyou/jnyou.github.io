@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jnyou.github.io/"/>
-  <updated>2020-06-21T09:22:53.511Z</updated>
+  <updated>2020-11-14T11:35:18.568Z</updated>
   <id>https://jnyou.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>VMWare增加系统硬盘容量（扩容）的操作方法</title>
+    <link href="https://jnyou.github.io/posts/vmware.html"/>
+    <id>https://jnyou.github.io/posts/vmware.html</id>
+    <published>2020-06-24T09:13:20.000Z</published>
+    <updated>2020-11-14T11:35:18.568Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在日常使用过程当中，我们偶尔会遇到系统磁盘容量不够用的情况，这时候我们需要对虚拟机进行磁盘扩容操作。&lt;/p&gt;
+&lt;p&gt;但是进行了常规的关闭虚拟机，增加磁盘操作后，Linux操作系统并不认为你已经将系统磁盘空间扩大。此时我们需要进行对新增容量的分区及合并操作。本文以CentOS
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="https://jnyou.github.io/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://jnyou.github.io/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS7系统安装步骤</title>
@@ -44,29 +72,6 @@
       <category term="Linux" scheme="https://jnyou.github.io/tags/Linux/"/>
     
       <category term="centos7" scheme="https://jnyou.github.io/tags/centos7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="https://jnyou.github.io/posts/3eeb.html"/>
-    <id>https://jnyou.github.io/posts/3eeb.html</id>
-    <published>2020-05-23T11:34:15.113Z</published>
-    <updated>2020-06-20T06:33:10.462Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a
-        
-      
-    
-    </summary>
-    
-    
     
   </entry>
   

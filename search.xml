@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>VMWare增加系统硬盘容量（扩容）的操作方法</title>
+      <link href="/posts/vmware.html"/>
+      <url>/posts/vmware.html</url>
+      
+        <content type="html"><![CDATA[<p>在日常使用过程当中，我们偶尔会遇到系统磁盘容量不够用的情况，这时候我们需要对虚拟机进行磁盘扩容操作。</p><p>但是进行了常规的关闭虚拟机，增加磁盘操作后，Linux操作系统并不认为你已经将系统磁盘空间扩大。此时我们需要进行对新增容量的分区及合并操作。本文以CentOS7为例，具体的操作方法如下：</p><h2 id="1-查看是否扩容成功"><a href="#1-查看是否扩容成功" class="headerlink" title="1.查看是否扩容成功"></a>1.查看是否扩容成功</h2><p>对系统磁盘扩容后，我们需要查看当前磁盘的容量，当前磁盘默认会在/dev/sda路径下。此时可以使用命令进行查看：</p><pre><code>[root@localhost ~]# fdisk /dev/sda</code></pre><p>提示输入命令时，输入p，查看当前分区信息：</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/20180808095330245?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>确认磁盘已经成功扩容之后，我们需要对磁盘进行分区。</p><h2 id="2-新增分区"><a href="#2-新增分区" class="headerlink" title="2. 新增分区"></a>2. 新增分区</h2><p>在Fdisk中继续输入新建分区命令：n</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/20180808095840903?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>直接回车，默认为主分区（primary）；</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/20180808100028682?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>分区号，起始扇区，结束扇区都用默认，一路回车，直到提示继续输入Fdisk命令的位置。</p><p>接下来，我们需要为分区设置分区格式，在Fdisk命令处输入：t</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/20180808100346877?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>分区号用默认，直接回车，Hex代码输入：8e。代表适用Linux LVM分区类型。</p><p>最后写入分区表，在Fdisk命令位置输入：w</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/2018080810062115?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>可能会有磁盘正在被使用的错误提示，先不理会就好。到此，磁盘分区已完成。</p><p>此时输入如下命令，就可以看到我们新创建的dev/sda3分区了，分区格式为Linux LVM类型。</p><pre><code>[root@localhost ~]# fdisk -l</code></pre><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/20180808100840506?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><h2 id="3-格式化后合并分区"><a href="#3-格式化后合并分区" class="headerlink" title="3. 格式化后合并分区"></a>3. 格式化后合并分区</h2><p>输入如下命令，在不重启的情况下重读分区表（或者干脆重启机器）：</p><pre><code>[root@localhost ~]# partprobe</code></pre><p>重读分区表后，直接格式化分区：</p><pre><code>[root@localhost ~]# mkfs.ext3 /dev/sda3</code></pre><p> 这里会根据你所分配的磁盘大小进行格式化，所以请耐心等待到最后一刻，期间不用输入任何字符；</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/201808081016593?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>全部完成之后，合并操作我们需要在LVM中进行操作。 直接输入如下命令，进入LVM：</p><pre><code>[root@localhost ~]# lvm</code></pre><p> 对dev/sda3进行初始化：</p><pre><code>lvm&gt; pvcreate /dev/sda3</code></pre><p> 接下来需要将新分区添加进系统默认的Volume group，centOS的默认Volume group为centos（也可以通过命令：df -h 来查看Volume group），所以输入如下命令：</p><pre><code>df -h </code></pre><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="C:%5CUsers%5CYJN%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20201108163021381.png" alt="image-20201108163021381"></p><pre><code>lvm&gt; vgextend centos /dev/sda3</code></pre><p>期间会让你输入’y’来确认；</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/2018080810262865?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>然后查看一下当前的Volume卷详情，输入：</p><pre><code>lvm&gt; vgdisplay -v</code></pre><p> 就可以看到新分区sda3的详情了，记住他的容量，我们这次的扩容大小为38399；</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/2018080810274578?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>将系统盘/dev/mapper/centos-root与sda3的38399空余容量合并，输入如下命令：</p><pre><code>lvm&gt; lvextend -l+38399 /dev/mapper/centos-root</code></pre><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/20180808103106241?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"> 卷扩容成功后，输入如下命令退出：</p><pre><code>lvm&gt; quit</code></pre><p>然后我们需要将文件系统进行扩容，以让系统识别，输入如下命令（只适用于CentOS7）：</p><pre><code>[root@localhost ~]# xfs_growfs /dev/mapper/centos-root</code></pre><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/20180808103530428?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><p>恭喜，操作完成，最后我们用fdisk -l来查看下：</p><p><img src="https://cdn.jsdelivr.net/gh/jnyou/blog.chart.bed@latest/images/pika4.gif" data-original="https://img-blog.csdn.net/20180808103720458?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xlZ2VuZDAydXdu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CentOS7系统安装步骤</title>
       <link href="/posts/ab2e.html"/>
       <url>/posts/ab2e.html</url>
@@ -25,19 +50,6 @@
             <tag> centos7 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/posts/3eeb.html"/>
-      <url>/posts/3eeb.html</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
       
     </entry>
     

@@ -1,3 +1,3 @@
-// build time:Sun Jun 21 2020 17:28:12 GMT+0800 (GMT+08:00)
+// build time:Sat Nov 14 2020 19:37:55 GMT+0800 (GMT+08:00)
 var a_idx=0;jQuery(document).ready(function(e){e("body").click(function(t){var o=new Array("滚去学习","好好学习","好好工作","成熟","加油","音乐","轮滑","唱歌","吉他","游泳","运动","旅行");var a=e("<span/>").text(o[a_idx]);a_idx=(a_idx+1)%o.length;var i=t.pageX,n=t.pageY;a.css({"z-index":5,top:n-20,left:i,position:"absolute","font-weight":"bold",color:"#FF0000"});e("body").append(a);a.animate({top:n-180,opacity:0},3e3,function(){a.remove()})});setTimeout("delay()",2e3)});function delay(){$(".buryit").removeAttr("onclick")}
 //rebuild by neat 
